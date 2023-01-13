@@ -9,8 +9,8 @@ import { Product } from './../../common/product';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
-  products: Product[] | undefined;
-  currentCategoryId: number | undefined;
+  products: Product[] = [];
+  currentCategoryId: number = 1;
 
   constructor(
     private productService: ProductService,
