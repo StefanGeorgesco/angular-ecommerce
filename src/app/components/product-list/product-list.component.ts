@@ -23,7 +23,7 @@ export class ProductListComponent implements OnInit {
   }
 
   listProducts() {
-    let searchMode: boolean = this.route.snapshot.paramMap.has('keyword');
+    const searchMode: boolean = this.route.snapshot.paramMap.has('keyword');
 
     if (searchMode) {
       this.handleSearchProducts();
@@ -33,7 +33,7 @@ export class ProductListComponent implements OnInit {
   }
 
   handleSearchProducts() {
-    let keyword: string = this.route.snapshot.paramMap.get('keyword')!;
+    const keyword: string = this.route.snapshot.paramMap.get('keyword')!;
     
     this.productService
       .searchProducts(keyword)
@@ -43,8 +43,8 @@ export class ProductListComponent implements OnInit {
   }
 
   handleListProducts() {
+    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id')!;
     let currentCategoryId: number = 1;
-    let hasCategoryId: boolean = this.route.snapshot.paramMap.has('id')!;
     
     if (hasCategoryId) {
       currentCategoryId = Number(this.route.snapshot.paramMap.get('id'));
