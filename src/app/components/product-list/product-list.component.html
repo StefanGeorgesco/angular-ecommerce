@@ -22,31 +22,28 @@
 
             </div>
 
+            <!-- begin pagination footer -->
             <div class="footer-pagination">
                 <div class="row">
                     <div class="col-md-6"></div>
-                    <div class="col-md-3">
-                        <div class="items">
-                            <label>Item per page</label>
-                            <select title="page size">
-                                <option>10</option>
-                                <option>20</option>
-                                <option>30</option>
-                                <option>40</option>
-                            </select>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-9 ms-auto">
+
+                                <ngb-pagination [(page)]="page" [pageSize]="pageSize"
+                                    [collectionSize]="totalElements" (pageChange)="listProducts()">
+
+                                </ngb-pagination>
+
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="number">1 - 10 of 100</div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="arrows">
-                            <a title="previous" href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-                            <a title="next" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
+            <!-- end pagination footer -->
+
         </div>
     </div>
 </div>

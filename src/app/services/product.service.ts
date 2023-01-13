@@ -8,7 +8,13 @@ import { Product } from '../common/product';
 interface GetResponseProducts {
   _embedded: {
     products: Product[];
-  };
+  },
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+  }
 }
 
 interface GetResponseProductCategory {
@@ -23,7 +29,13 @@ interface GetResponseProductCategory {
 export class ProductService {
   private baseUrl = 'http://localhost:8080/api';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
+
+  getProductListPaginate(categoryId: number, page: number, size: number): Observable<GetResponseProducts> {
+    const url: string = `${this.baseUrl}/products/search/findByCategoryId?id=${categoryId}&size=${size}&page=${page}`;
+
+    return this.httpClient.get<GetResponseProducts>(url);
+  }
 
   getProductList(categoryId: number): Observable<Product[]> {
     const url: string = `${this.baseUrl}/products/search/findByCategoryId?id=${categoryId}`;
