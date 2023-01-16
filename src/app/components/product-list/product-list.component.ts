@@ -10,18 +10,19 @@ import { NgbTime } from '@ng-bootstrap/ng-bootstrap/timepicker/ngb-time';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
+
   products: Product[] = [];
   currentCategoryId: number = 1;
   previousCategoryId: number = 1;
   searchMode: boolean = false;
   page: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 5;
   totalElements: number = 0;
-  
+
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -41,7 +42,7 @@ export class ProductListComponent implements OnInit {
 
   handleSearchProducts() {
     const keyword: string = this.route.snapshot.paramMap.get('keyword')!;
-    
+
     this.productService
       .searchProducts(keyword)
       .subscribe((data) => {
@@ -51,7 +52,7 @@ export class ProductListComponent implements OnInit {
 
   handleListProducts() {
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id')!;
-    
+
     if (hasCategoryId) {
       this.currentCategoryId = Number(this.route.snapshot.paramMap.get('id'));
     } else {
@@ -72,5 +73,11 @@ export class ProductListComponent implements OnInit {
         this.pageSize = data.page.size;
         this.totalElements = data.page.totalElements;
       });
+  }
+
+  updatePageSize(selection: string) {
+    this.pageSize = Number(selection);
+    this.page = 1;
+    this.listProducts();
   }
 }
