@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from './../../services/product.service';
+import { ProductService, GetResponseProducts } from './../../services/product.service';
 import { Product } from './../../common/product';
-import { NgbTime } from '@ng-bootstrap/ng-bootstrap/timepicker/ngb-time';
 
 @Component({
   selector: 'app-product-list',
@@ -15,6 +14,7 @@ export class ProductListComponent implements OnInit {
   currentCategoryId: number = 1;
   previousCategoryId: number = 1;
   searchMode: boolean = false;
+  previousKeyword: string = "";
   page: number = 1;
   pageSize: number = 5;
   totalElements: number = 0;
@@ -30,6 +30,12 @@ export class ProductListComponent implements OnInit {
     });
   }
 
+  updatePageSize(selection: string): void {
+    this.pageSize = Number(selection);
+    this.page = 1;
+    this.listProducts();
+  }
+
   listProducts() {
     this.searchMode = this.route.snapshot.paramMap.has('keyword');
 
@@ -43,11 +49,15 @@ export class ProductListComponent implements OnInit {
   handleSearchProducts() {
     const keyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
+    if (this.previousKeyword !== keyword) {
+      this.page = 1;
+    }
+
+    this.previousKeyword = keyword;
+
     this.productService
-      .searchProducts(keyword)
-      .subscribe((data) => {
-        this.products = data;
-      });
+      .searchProductsPaginate(keyword, this.page - 1, this.pageSize)
+      .subscribe(this.processResult());
   }
 
   handleListProducts() {
@@ -67,17 +77,15 @@ export class ProductListComponent implements OnInit {
 
     this.productService
       .getProductListPaginate(this.currentCategoryId, this.page - 1, this.pageSize)
-      .subscribe((data) => {
-        this.products = data._embedded.products;
-        this.page = data.page.number + 1;
-        this.pageSize = data.page.size;
-        this.totalElements = data.page.totalElements;
-      });
+      .subscribe(this.processResult());
   }
 
-  updatePageSize(selection: string) {
-    this.pageSize = Number(selection);
-    this.page = 1;
-    this.listProducts();
+  private processResult() {
+    return (data: GetResponseProducts) => {
+      this.products = data._embedded.products;
+      this.page = data.page.number + 1;
+      this.pageSize = data.page.size;
+      this.totalElements = data.page.totalElements;
+    };
   }
 }

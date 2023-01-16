@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Product } from '../common/product';
 
-interface GetResponseProducts {
+export interface GetResponseProducts {
   _embedded: {
     products: Product[];
   },
@@ -17,7 +17,7 @@ interface GetResponseProducts {
   }
 }
 
-interface GetResponseProductCategory {
+export interface GetResponseProductCategory {
   _embedded: {
     productCategory: ProductCategory[];
   };
@@ -37,22 +37,10 @@ export class ProductService {
     return this.httpClient.get<GetResponseProducts>(url);
   }
 
-  getProductList(categoryId: number): Observable<Product[]> {
-    const url: string = `${this.baseUrl}/products/search/findByCategoryId?id=${categoryId}`;
+  searchProductsPaginate(keyword: string, page: number, size: number): Observable<GetResponseProducts> {
+    const url: string = `${this.baseUrl}/products/search/findByNameContaining?name=${keyword}&size=${size}&page=${page}`;
 
-    return this.getProducts(url);
-  }
-
-  searchProducts(keyword: string): Observable<Product[]> {
-    const url: string = `${this.baseUrl}/products/search/findByNameContaining?name=${keyword}`;
-
-    return this.getProducts(url);
-  }
-
-  private getProducts(url: string): Observable<Product[]> {
-    return this.httpClient
-      .get<GetResponseProducts>(url)
-      .pipe(map((response) => response._embedded.products));
+    return this.httpClient.get<GetResponseProducts>(url);
   }
 
   getProduct(id: number): Observable<Product> {
