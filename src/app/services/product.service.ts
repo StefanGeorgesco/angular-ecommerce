@@ -54,6 +54,6 @@ export class ProductService {
 
     return this.httpClient
       .get<GetResponseProductCategory>(url)
-      .pipe(map((response) => response._embedded.productCategory));
+      .pipe(map(response => response._embedded.productCategory));
   }
 }
