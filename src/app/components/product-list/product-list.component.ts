@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService, GetResponseProducts } from './../../services/product.service';
+import { CartService } from './../../services/cart.service';
 import { Product } from './../../common/product';
+import { CartItem } from './../../common/cart-item';
 
 @Component({
   selector: 'app-product-list',
@@ -21,6 +23,7 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private cartService: CartService,
     private route: ActivatedRoute
   ) { }
 
@@ -36,7 +39,7 @@ export class ProductListComponent implements OnInit {
     this.listProducts();
   }
 
-  listProducts() {
+  listProducts(): void {
     this.searchMode = this.route.snapshot.paramMap.has('keyword');
 
     if (this.searchMode) {
@@ -46,7 +49,7 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  handleSearchProducts() {
+  handleSearchProducts(): void {
     const keyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
     if (this.previousKeyword !== keyword) {
@@ -60,7 +63,7 @@ export class ProductListComponent implements OnInit {
       .subscribe(this.processResult());
   }
 
-  handleListProducts() {
+  handleListProducts(): void {
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id')!;
 
     if (hasCategoryId) {
@@ -80,12 +83,16 @@ export class ProductListComponent implements OnInit {
       .subscribe(this.processResult());
   }
 
-  private processResult() {
+  private processResult(): (data: GetResponseProducts) => void {
     return (data: GetResponseProducts) => {
       this.products = data._embedded.products;
       this.page = data.page.number + 1;
       this.pageSize = data.page.size;
       this.totalElements = data.page.totalElements;
     };
+  }
+
+  addToCart(product: Product): void {
+    this.cartService.addToCart(new CartItem(product));
   }
 }

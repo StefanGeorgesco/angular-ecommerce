@@ -13,10 +13,10 @@
                         </a>
                         <h2>{{ product.description }}</h2>
                         <div class="price"> {{ product.unitPrice | currency:'USD' }} </div>
-                        <a href="#" class="primary-btn">Add to cart</a>
+                        <button (click)="addToCart(product)" type="button" class="btn btn-primary btn-sm">Add to cart</button>
                     </div>
                 </div>
-                <div *ngIf="products?.length === 0" class="alert alert-warning">
+                <div *ngIf="products?.length === 0" class="alert alert-warning" role="alert">
                     No products found.
                 </div>
 
@@ -29,7 +29,7 @@
 
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-9 ms-auto">
+                            <div *ngIf="totalElements > pageSize" class="col-md-9 ms-auto">
 
                                 <ngb-pagination
                                     [(page)]="page"
@@ -41,7 +41,7 @@
                                 </ngb-pagination>
 
                             </div>
-                            <div class="col-md-3">
+                            <div *ngIf="totalElements > 0" class="col-md-3">
                                 <span class="me-2">Page Size</span>
                                 <select
                                     #myPageSizeSelect
