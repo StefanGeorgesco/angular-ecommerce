@@ -41,6 +41,12 @@ export class CartService {
     this.computeAndPublishTotals();
   }
 
+  resetCart() {
+    this.cartItems = [];
+    this.totalPrice.next(0);
+    this.totalQuantity.next(0);
+  }
+
   computeAndPublishTotals() {
     let totalCartPrice: number = this.cartItems.reduce((tot, curr) => tot + curr.product.unitPrice * curr.quantity, 0);
     let totalCartQuantity: number = this.cartItems.reduce((tot, curr) => tot + curr.quantity, 0);
