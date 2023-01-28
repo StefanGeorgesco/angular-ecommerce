@@ -168,8 +168,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   doCheckout(): void {
-    console.log(this.checkoutFormGroup.value);
-
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
       return;
