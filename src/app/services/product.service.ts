@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Product } from '../common/product';
+import { environment } from 'src/environments/environment';
 
 export interface GetResponseProducts {
   _embedded: {
@@ -27,7 +28,7 @@ export interface GetResponseProductCategory {
   providedIn: 'root',
 })
 export class ProductService {
-  private baseUrl = 'http://localhost:8080/api';
+  private baseUrl = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) { }
 
