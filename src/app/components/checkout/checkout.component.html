@@ -35,8 +35,7 @@
                                 <input id="last_name" formControlName="lastName" type="text">
                                 <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
                                     class="alert alert-danger mt-1">
-                                    <div
-                                        *ngIf="lastName.errors!['required'] || lastName.errors!['notOnlyWhiteSpaces']">
+                                    <div *ngIf="lastName.errors!['required'] || lastName.errors!['notOnlyWhiteSpaces']">
                                         Last Name is required
                                     </div>
                                     <div *ngIf="lastName.errors!['minlength']">
@@ -287,115 +286,14 @@
                     </div>
                 </div>
 
-                <!-- Credit Card -->
+                <!-- Stripe Credit Card -->
                 <div formGroupName="creditCard" class="form-area">
-                    <h3>Credit Card</h3>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label for="card_type">Card Type</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="cardType" id="card_type">
-                                    <option>Visa</option>
-                                    <option>Mastercard</option>
-                                </select>
-                                <div *ngIf="cardType.invalid && (cardType.dirty || cardType.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="cardType.errors!['required']">
-                                        Card Type is required
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <h3>Credit or Debit Card</h3>
+                    <div id="card-element">
+                        <!-- a Stripe element will be inserted here -->
                     </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label for="name_on_card">Name on Card</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="nameOnCard" type="text" id="name_on_card">
-                                <div *ngIf="nameOnCard.invalid && (nameOnCard.dirty || nameOnCard.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div
-                                        *ngIf="nameOnCard.errors!['required'] || nameOnCard.errors!['notOnlyWhiteSpaces']">
-                                        Name on Card is required
-                                    </div>
-                                    <div *ngIf="nameOnCard.errors!['minlength']">
-                                        Name on Card must be at least 2 characters long
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label for="card_number">Card Number</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="cardNumber" type="text" id="card_number">
-                                <div *ngIf="cardNumber.invalid && (cardNumber.dirty || cardNumber.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="cardNumber.errors!['required']">
-                                        card Number is required
-                                    </div>
-                                    <div *ngIf="cardNumber.errors!['pattern']">
-                                        card Number must be in 16 digits format
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label for="security_code">Security Code</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="securityCode" type="text" id="security_code">
-                                <div *ngIf="securityCode.invalid && (securityCode.dirty || securityCode.touched)"
-                                    class="alert alert-danger mt-1">
-                                    <div *ngIf="securityCode.errors!['required']">
-                                        security Code is required
-                                    </div>
-                                    <div *ngIf="securityCode.errors!['pattern']">
-                                        security Code must be in 3 digits format
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label for="expiration_month">Expiration Month</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="expirationMonth" id="expiration_month">
-                                    <option *ngFor="let month of creditCardMonths">
-                                        {{ month }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label for="expiration_year">Expiration Year</label>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="expirationYear" id="expiration_year"
-                                    (change)="handleMonthsAndYears()">
-                                    <option *ngFor="let year of creditCardYears">
-                                        {{ year }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Used to display form errors -->
+                    <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'"></div>
                 </div>
 
                 <!-- Order details -->
