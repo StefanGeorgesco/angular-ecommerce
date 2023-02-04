@@ -193,7 +193,7 @@ export class CheckoutComponent implements OnInit {
     purchase.orderItems = orderItems;
 
     // compute payment info
-    this.paymentInfo.amount = this.totalPrice * environment.currencyMultiplicator;
+    this.paymentInfo.amount = Math.round(this.totalPrice * environment.currencyMultiplicator);
     this.paymentInfo.currency = environment.currency;
 
     if (this.displayError?.textContent === "") {
@@ -202,7 +202,18 @@ export class CheckoutComponent implements OnInit {
           this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
             {
               payment_method: {
-                card: this.cardElement
+                card: this.cardElement,
+                billing_details: {
+                  email: purchase.customer.email,
+                  name: `${purchase.customer.firstName} ${purchase.customer.lastName}`,
+                  address: {
+                    line1: purchase.billingAddress.street,
+                    city: purchase.billingAddress.city,
+                    state: purchase.billingAddress.state,
+                    postal_code: purchase.billingAddress.zipCode,
+                    country: this.billingAddressCountry.value.code
+                  }
+                }
               }
             },
             {
