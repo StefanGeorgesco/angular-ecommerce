@@ -197,6 +197,7 @@ export class CheckoutComponent implements OnInit {
     // compute payment info
     this.paymentInfo.amount = Math.round(this.totalPrice * environment.currencyMultiplicator);
     this.paymentInfo.currency = environment.currency;
+    this.paymentInfo.receiptEmail = purchase.customer.email;
 
     if (this.displayError?.textContent === "") {
       this.isDisabled = true;

@@ -1,4 +1,5 @@
 export class PaymentInfo {
-    constructor(public amount?: number,
-        public currency?: String) { }
+    amount?: number;
+    currency?: String;
+    receiptEmail?: string;
 }
