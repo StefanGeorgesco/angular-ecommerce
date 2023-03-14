@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {APP_BASE_HREF} from '@angular/common';
 
 import { OktaAuthGuard, OktaAuthModule, OktaCallbackComponent, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
@@ -23,6 +24,7 @@ import { OrderHistoryComponent } from './components/order-history/order-history.
 
 import myAppConfig from './config/my-app-config';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { environment } from 'src/environments/environment';
 
 const oktaConfig = myAppConfig.oidc;
 const oktaAuth = new OktaAuth(oktaConfig);
@@ -74,7 +76,8 @@ const routes: Routes = [
   ],
   providers: [
     { provide: OKTA_CONFIG, useValue: { oktaAuth } },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+    { provide: APP_BASE_HREF, useValue: environment.appBaseHref }
   ],
   bootstrap: [AppComponent]
 })

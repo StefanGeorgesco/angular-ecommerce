@@ -1,0 +1,11 @@
+server {
+    
+    listen 80;
+
+    root /usr/share/nginx/html;
+
+    location /ecommerce/ {
+    	try_files $uri /ecommerce/index.html;
+    }
+
+}

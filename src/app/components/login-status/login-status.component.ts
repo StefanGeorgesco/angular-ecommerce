@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login-status',
@@ -39,7 +40,7 @@ export class LoginStatusComponent implements OnInit {
   }
 
   logout(): void {
-    this.oktaAuth.signOut();
+    this.oktaAuth.signOut({ postLogoutRedirectUri: environment.postLogoutRedirectUri, });
     this.storage.removeItem('userEmail');
   }
 }
