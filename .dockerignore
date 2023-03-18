@@ -1,7 +1,12 @@
+.vscode
+dist
+nginx
 node_modules
-package-lock.json
-dist/
 .dockerignore
-Dockerfile.prod
-Dockerfile
 .gitignore
+.editorconfig
+compose.yaml
+Dockerfile
+Dockerfile.prod
+package-lock.json
+README.md
