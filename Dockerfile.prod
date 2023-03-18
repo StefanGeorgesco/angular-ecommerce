@@ -1,4 +1,4 @@
-# image : stefangeorgesco/dmp-oauth-frontend
+# image : stefangeorgesco/angular-ecommerce
 
 FROM node:16.16.0 as build
 
