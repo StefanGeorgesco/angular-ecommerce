@@ -1,4 +1,4 @@
-const baseUrl = "/ecommerce";
+const baseUrl = "/angular-ecommerce";
 
 export const environment = {
   production: true,
